@@ -10,6 +10,7 @@ import { Flag, useFlagStatus } from "@/services/feature-flags/use-get-flag";
 import { notFound } from "next/navigation";
 import { CreateMenu } from "./components/CreateMenu/CreateMenu";
 import { EmptyTeamState } from "./components/EmptyTeamState";
+import { ExpertChatDrawer } from "./components/ExpertChatDrawer/ExpertChatDrawer";
 import { ExpertTeamCard } from "./components/ExpertTeamCard/ExpertTeamCard";
 import { ExpertTeamCardSkeleton } from "./components/ExpertTeamCardSkeleton";
 import { NewPodDialog } from "./components/NewPodDialog/NewPodDialog";
@@ -48,6 +49,11 @@ export default function TeamPage() {
     createPod,
     isCreatingPod,
     assignPod,
+    isChatOpen,
+    chatExpert,
+    openExpertChat,
+    openAutopilotChat,
+    closeChat,
   } = useTeamPage({ enabled: Boolean(enabled) && ready });
 
   if (!ready) {
@@ -77,6 +83,7 @@ export default function TeamPage() {
         onInstallWorkflow={installWorkflow}
         onEditSoul={openSoul}
         onAssignPod={assignPod}
+        onChat={openExpertChat}
       />
     );
   }
@@ -105,6 +112,7 @@ export default function TeamPage() {
         podGroups={podGroups}
         ungroupedExperts={ungroupedExperts}
         renderCard={renderCard}
+        onAutopilotChat={openAutopilotChat}
       />
 
       {!isLoading && !isError && hiredExperts.length > 0 ? (
@@ -131,6 +139,11 @@ export default function TeamPage() {
         onClose={closeWorkflowPicker}
       />
       <SoulDrawer key={soulDrawerKey} expert={soulExpert} onClose={closeSoul} />
+      <ExpertChatDrawer
+        open={isChatOpen}
+        expert={chatExpert}
+        onClose={closeChat}
+      />
       <NewPodDialog
         open={isNewPodOpen}
         onClose={closeNewPod}

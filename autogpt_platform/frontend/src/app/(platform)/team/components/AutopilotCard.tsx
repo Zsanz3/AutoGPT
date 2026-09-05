@@ -4,7 +4,11 @@ import { Text } from "@/components/atoms/Text/Text";
 import { Robot01Icon } from "@hugeicons/core-free-icons";
 import { Icon } from "@/components/atoms/Icon/Icon";
 
-export function AutopilotCard() {
+interface Props {
+  onChat: () => void;
+}
+
+export function AutopilotCard({ onChat }: Props) {
   return (
     <div className="flex flex-col gap-3 rounded-[1.75rem] border border-zinc-200 bg-white p-5">
       <div className="flex items-center gap-3">
@@ -25,7 +29,7 @@ export function AutopilotCard() {
         hands work to your hired experts.
       </Text>
       <div className="mt-auto flex gap-2">
-        <Button as="NextLink" href="/copilot" variant="secondary" size="small">
+        <Button variant="secondary" size="small" onClick={onChat}>
           Chat
         </Button>
       </div>

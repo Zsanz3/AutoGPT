@@ -48,6 +48,7 @@ interface Props {
   onInstallWorkflow: (expertId: string) => void;
   onEditSoul: (expertId: string) => void;
   onAssignPod: (expertId: string, podId: string | null) => void;
+  onChat: (expertId: string) => void;
 }
 
 export function ExpertTeamCard({
@@ -58,6 +59,7 @@ export function ExpertTeamCard({
   onInstallWorkflow,
   onEditSoul,
   onAssignPod,
+  onChat,
 }: Props) {
   const workflowCount = expert.workflows.length;
   const needsSetupCount = getNeedsSetupCount(expert, schedules);
@@ -193,10 +195,9 @@ export function ExpertTeamCard({
         ) : null}
         <div className="mt-auto flex flex-wrap gap-2">
           <Button
-            as="NextLink"
-            href={`/copilot?expertId=${expert.id}`}
             variant="secondary"
             size="small"
+            onClick={() => onChat(expert.id)}
           >
             Chat
           </Button>

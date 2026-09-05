@@ -11,6 +11,7 @@ interface Props {
   podGroups: { pod: ExpertPod; experts: Expert[] }[];
   ungroupedExperts: Expert[];
   renderCard: (expert: Expert) => ReactNode;
+  onAutopilotChat: () => void;
 }
 
 interface SectionHeaderProps {
@@ -23,11 +24,12 @@ export function TeamRoster({
   podGroups,
   ungroupedExperts,
   renderCard,
+  onAutopilotChat,
 }: Props) {
   if (isLoading) {
     return (
       <div className={TEAM_GRID_CLASS}>
-        <AutopilotCard />
+        <AutopilotCard onChat={onAutopilotChat} />
         {[0, 1, 2].map((index) => (
           <ExpertTeamCardSkeleton key={index} />
         ))}
@@ -38,7 +40,7 @@ export function TeamRoster({
   if (podGroups.length === 0) {
     return (
       <div className={TEAM_GRID_CLASS}>
-        <AutopilotCard />
+        <AutopilotCard onChat={onAutopilotChat} />
         {ungroupedExperts.map(renderCard)}
       </div>
     );
@@ -47,7 +49,7 @@ export function TeamRoster({
   return (
     <div className="space-y-8">
       <div className={TEAM_GRID_CLASS}>
-        <AutopilotCard />
+        <AutopilotCard onChat={onAutopilotChat} />
       </div>
       {podGroups.map((group) => (
         <section key={group.pod.id} className="space-y-3">
